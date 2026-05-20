@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     bool _isGameOver = false;
+    bool _isPaused = false;
 
-    // Update is called once per frame
+    public bool IsGameOver => _isGameOver;
+    public bool IsPaused => _isPaused;
+
     void Update()
     {
         restartGame();
@@ -21,9 +24,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetPaused(bool paused)
+    {
+        _isPaused = paused;
+    }
+
     public void gameOver()
     {
         _isGameOver = true;
+        _isPaused = true;
     }
-
 }
+

@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     int _score = 0;
     SpawnManager _spawnManager;
     UiManager _uiManager;
+    GameManager _gameManager;
+    LevelManager _levelManager;
     [SerializeField] GameObject _laser;
     [SerializeField] AudioClip _laserClip;
     AudioSource _audioSource;
@@ -20,11 +22,17 @@ public class Player : MonoBehaviour
         _audioSource.clip = _laserClip;     
         _spawnManager = GameObject.Find("SpawnEnemies").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        _levelManager = GameObject.Find("Game_Manager").GetComponent<LevelManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (_gameManager.IsPaused || _gameManager.IsGameOver)
+        {
+            return;
+        }
+
         movement();
         fire();
     }
@@ -78,5 +86,6 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.updateScore(_score);
+        _levelManager.OnScoreChanged(_score);
     }
 }

@@ -27,16 +27,24 @@ public class LeftEnemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "PLAYER")
+        if (collision.CompareTag("PLAYER"))
         {
-            _player.damage();
-            Destroy(this.gameObject);
+            if (_player != null)
+            {
+                _player.damage();
+            }
+            Destroy(gameObject);
+            return;
         }
-        if (collision.tag == "LASER")
+
+        if (collision.CompareTag("LASER"))
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             Destroy(collision.gameObject);
-            _player.addScore(10);
+            if (_player != null)
+            {
+                _player.addScore(10);
+            }
         }
     }
 }
