@@ -389,9 +389,10 @@ public class MCQManager : MonoBehaviour
         _resultPanel.SetActive(true);
 
         int restored = 0;
-        if (_correctCount == 6) restored = 3;
-        else if (_correctCount == 4) restored = 2;
-        else if (_correctCount == 2) restored = 1;
+        // Use thresholds so near-perfect rounds also reward lives
+        if (_correctCount >= 5) restored = 3;
+        else if (_correctCount >= 4) restored = 2;
+        else if (_correctCount >= 2) restored = 1;
         else restored = 0;
 
         _resultSummaryText.text = $"{_correctCount} / {_roundQuestions.Count} Correct\nLives restored: {restored}\n" + (restored>0?"Good job! Get back out there!":"Not enough correct. Game Over.");

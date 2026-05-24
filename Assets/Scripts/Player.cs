@@ -117,7 +117,10 @@ public class Player : MonoBehaviour
     public void RestoreLives(int lives)
     {
         Debug.Log($"[Player] RestoreLives called: {lives}");
-        _lives = lives;
+        // Add restored lives to current lives (so repeated MCQ rewards accumulate)
+        _lives += lives;
+        // Clamp to reasonable bounds (0..3) to match UI sprite indices
+        _lives = Mathf.Clamp(_lives, 0, 3);
         _uiManager.updateLives(_lives);
         if (lives > 0)
         {
