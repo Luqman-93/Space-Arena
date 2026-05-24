@@ -11,6 +11,8 @@ public class SpawnManager : MonoBehaviour
     bool _isSpawning;
     int _currentLevel = 1;
 
+    public int CurrentLevel { get { return _currentLevel; } }
+
     float _topSpawnTime = 2.5f;
     float _bottomSpawnTime = 2f;
 

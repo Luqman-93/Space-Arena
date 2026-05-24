@@ -20,6 +20,13 @@ public class UiManager : MonoBehaviour
 
     void Awake()
     {
+        // Auto-attach MCQManager if not already on Canvas
+        if (GetComponent<MCQManager>() == null)
+        {
+            gameObject.AddComponent<MCQManager>();
+            Debug.Log("[UiManager] MCQManager auto-attached to Canvas");
+        }
+
         BuildLevelPopupUI();
     }
 
@@ -146,7 +153,6 @@ public class UiManager : MonoBehaviour
 
     void gameOver()
     {
-        _isGameOverShown = true;
         HideLevelPopup();
         gameOverText.gameObject.SetActive(true);
         restartText.gameObject.SetActive(true);

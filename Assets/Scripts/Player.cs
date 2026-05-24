@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     UiManager _uiManager;
     GameManager _gameManager;
     LevelManager _levelManager;
+    MCQManager _mcqManager;
     [SerializeField] GameObject _laser;
     [SerializeField] AudioClip _laserClip;
     AudioSource _audioSource;
@@ -24,6 +25,23 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
         _levelManager = GameObject.Find("Game_Manager").GetComponent<LevelManager>();
+        var canvas = GameObject.Find("Canvas");
+        if (canvas != null)
+        {
+            _mcqManager = canvas.GetComponent<MCQManager>();
+            if (_mcqManager == null)
+            {
+                Debug.LogError("MCQManager NOT found on Canvas!");
+            }
+            else
+            {
+                Debug.Log("MCQManager found and linked to Player");
+            }
+        }
+        else
+        {
+            Debug.LogError("Canvas GameObject NOT found!");
+        }
     }
 
     void Update()
@@ -75,11 +93,36 @@ public class Player : MonoBehaviour
     public void damage()
     {
         _lives--;
-        _uiManager.updateLives(_lives);
-        if (_lives < 1)
+        if (_lives > 0)
         {
-            Destroy(this.gameObject);
-            _spawnManager.onPlayerDeath();
+            _uiManager.updateLives(_lives);
+        }
+        else
+        {
+            if (_mcqManager != null)
+            {
+                Debug.Log("Lives ended, triggering MCQManager.TriggerMCQ()");
+                _mcqManager.TriggerMCQ();
+            }
+            else
+            {
+                Debug.LogError("MCQManager is NULL! Using fallback death.");
+                // Fallback: if MCQManager not found, perform normal death
+                Destroy(this.gameObject);
+                _spawnManager.onPlayerDeath();
+            }
+        }
+    }
+
+    public void RestoreLives(int lives)
+    {
+        Debug.Log($"[Player] RestoreLives called: {lives}");
+        _lives = lives;
+        _uiManager.updateLives(_lives);
+        if (lives > 0)
+        {
+            transform.position = Vector3.zero;
+            gameObject.SetActive(true);
         }
     }
     public void addScore(int points)
