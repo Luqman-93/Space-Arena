@@ -402,7 +402,6 @@ public class MCQManager : MonoBehaviour
     IEnumerator HandlePostResult(int restored)
     {
         yield return new WaitForSeconds(2f);
-        _mcqPanel.SetActive(false);
 
         if (restored > 0)
         {
@@ -444,11 +443,14 @@ public class MCQManager : MonoBehaviour
             {
                 _spawnManager.BeginLevel(_spawnManager.CurrentLevel);
             }
+            // hide mcq UI and resume gameplay
+            _mcqPanel.SetActive(false);
         }
         else
         {
-            // trigger normal game over
-            _uiManager.updateLives(0);
+            // Do NOT trigger game over automatically. Return to the choice screen
+            // so the player can choose to quit (Q) or try MCQ again (P).
+            ShowChoiceScreen();
         }
     }
 }
