@@ -424,7 +424,15 @@ public class MCQManager : MonoBehaviour
             // Update UI and resume
             if (_uiManager != null)
             {
-                _uiManager.updateLives(restored);
+                // Use the player's actual lives value (in case logic changes)
+                if (_player != null)
+                {
+                    _uiManager.updateLives(_player.Lives);
+                }
+                else
+                {
+                    _uiManager.updateLives(restored);
+                }
             }
 
             if (_gameManager != null)

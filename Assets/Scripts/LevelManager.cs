@@ -78,7 +78,7 @@ public class LevelManager : MonoBehaviour
     {
         _uiManager.ShowLevelPopup(title, message);
 
-        while (!Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.Return))
+        while (!Input.GetKeyDown(KeyCode.Return) && !Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             yield return null;
         }

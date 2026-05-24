@@ -125,6 +125,10 @@ public class Player : MonoBehaviour
             gameObject.SetActive(true);
         }
     }
+    public int Lives
+    {
+        get { return _lives; }
+    }
     public void addScore(int points)
     {
         _score += points;

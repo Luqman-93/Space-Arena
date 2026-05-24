@@ -122,7 +122,7 @@ public class UiManager : MonoBehaviour
 
         _levelTitleText.text = title;
         _levelMessageText.text = message;
-        _levelContinueText.text = "Press SPACE to continue";
+        _levelContinueText.text = "Press ENTER to continue";
 
         _levelTitleText.color = Color.white;
         _levelMessageText.color = Color.white;
